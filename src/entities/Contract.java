@@ -1,6 +1,7 @@
 package entities;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +11,8 @@ public class Contract {
     private LocalDate localDate;
     private Double totalValue;
     private List<Installment> installments = new ArrayList<>();
+
+    private final DateTimeFormatter DTF = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 
     //--------------------------------------------Constructors-----------------------------------------------//
@@ -39,6 +42,10 @@ public class Contract {
         return installments;
     }
 
+    public DateTimeFormatter getDTF() {
+        return DTF;
+    }
+
     //--------------------------------------------Setters-------------------------------------------------------//
     public void setDate(LocalDate localDate) {
         this.localDate = localDate;
@@ -46,11 +53,12 @@ public class Contract {
 
     @Override
     public String toString() {
-        return "Contract{" +
-                "number=" + number +
-                ", localDate=" + localDate +
-                ", totalValue=" + totalValue +
-                ", installments=" + installments +
-                '}';
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Number: ").append(getNumber());
+        sb.append("\nContract date: ").append(DTF.format(getLocalDate()));
+        sb.append("\nTotal value: ").append(getTotalValue());
+
+        return sb.toString();
     }
 }
